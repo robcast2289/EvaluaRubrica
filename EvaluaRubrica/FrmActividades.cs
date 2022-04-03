@@ -447,7 +447,10 @@ namespace EvaluaRubrica
             if(txtFechaAct.Text == string.Empty)
             {
                 FrmQualifyRubrica frm = new FrmQualifyRubrica(0);
-                frm.Show();
+                if (frm.formValid == false)
+                    frm.Close();
+                else
+                    frm.Show();
             }
             else
             {
@@ -461,7 +464,10 @@ namespace EvaluaRubrica
             if (txtFechaMej.Text == string.Empty)
             {
                 FrmQualifyRubrica frm = new FrmQualifyRubrica(1);
-                frm.Show();
+                if (frm.formValid == false)
+                    frm.Close();
+                else
+                    frm.Show();
             }
             else
             {
@@ -475,7 +481,10 @@ namespace EvaluaRubrica
             if (txtFechaExt.Text == string.Empty)
             {
                 FrmQualifyRubrica frm = new FrmQualifyRubrica(2);
-                frm.Show();
+                if (frm.formValid == false)
+                    frm.Close();
+                else
+                    frm.Show();
             }
             else
             {

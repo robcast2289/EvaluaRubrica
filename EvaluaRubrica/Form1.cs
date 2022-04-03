@@ -22,6 +22,7 @@ namespace EvaluaRubrica
         public Form1()
         {
             InitializeComponent();
+            lblVersion.Text = "Version: "+ System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
             IniciaApp();
             customizeDesign();
 

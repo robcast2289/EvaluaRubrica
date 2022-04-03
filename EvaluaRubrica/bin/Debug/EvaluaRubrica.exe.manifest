@@ -4,7 +4,7 @@
   <description asmv2:iconFile="1945985_backblack2.ico" xmlns="urn:schemas-microsoft-com:asm.v1" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="EvaluaRubrica" version="1.0.5.0" language="neutral" processorArchitecture="x86" />
+    <assemblyIdentity name="EvaluaRubrica" version="1.0.6.0" language="neutral" processorArchitecture="x86" />
     <commandLine file="EvaluaRubrica.exe" parameters="" />
   </entryPoint>
   <trustInfo>
@@ -70,14 +70,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EvaluaRubrica.exe" size="1311216">
-      <assemblyIdentity name="EvaluaRubrica" version="1.0.5.0" language="neutral" processorArchitecture="x86" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="EvaluaRubrica.exe" size="1313776">
+      <assemblyIdentity name="EvaluaRubrica" version="1.0.6.0" language="neutral" processorArchitecture="x86" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha1" />
-        <dsig:DigestValue>JUHnnbVjakW2lwAdBRRv5mQ38YQ=</dsig:DigestValue>
+        <dsig:DigestValue>uR1u1vn5ZKrmCY+EeLc7GEd5MIE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

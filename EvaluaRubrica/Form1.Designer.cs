@@ -30,7 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.panelSideMenu = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblVersion = new System.Windows.Forms.Label();
             this.btnLogoutMenu = new System.Windows.Forms.Button();
             this.panelConfigSubmenu = new System.Windows.Forms.Panel();
             this.btnGeneralConfig = new System.Windows.Forms.Button();
@@ -61,7 +61,7 @@
             // 
             this.panelSideMenu.AutoScroll = true;
             this.panelSideMenu.BackColor = System.Drawing.Color.Black;
-            this.panelSideMenu.Controls.Add(this.label1);
+            this.panelSideMenu.Controls.Add(this.lblVersion);
             this.panelSideMenu.Controls.Add(this.btnLogoutMenu);
             this.panelSideMenu.Controls.Add(this.panelConfigSubmenu);
             this.panelSideMenu.Controls.Add(this.btnConfigMenu);
@@ -74,16 +74,16 @@
             this.panelSideMenu.Size = new System.Drawing.Size(250, 554);
             this.panelSideMenu.TabIndex = 0;
             // 
-            // label1
+            // lblVersion
             // 
-            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.Color.DimGray;
-            this.label1.Location = new System.Drawing.Point(3, 537);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(96, 17);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "Version: 1.0.5";
+            this.lblVersion.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.lblVersion.AutoSize = true;
+            this.lblVersion.ForeColor = System.Drawing.Color.DimGray;
+            this.lblVersion.Location = new System.Drawing.Point(3, 537);
+            this.lblVersion.Name = "lblVersion";
+            this.lblVersion.Size = new System.Drawing.Size(96, 17);
+            this.lblVersion.TabIndex = 5;
+            this.lblVersion.Text = "Version: 1.0.5";
             // 
             // btnLogoutMenu
             // 
@@ -397,7 +397,7 @@
         private System.Windows.Forms.Button btnActividades;
         private System.Windows.Forms.Button btnAlumnos;
         private System.Windows.Forms.Button btnData;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblVersion;
     }
 }
 

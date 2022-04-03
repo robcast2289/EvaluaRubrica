@@ -29,6 +29,7 @@ namespace EvaluaRubrica
         int eVertical = 250;
         int eHorizontal = 0;
         int eEntreControles = 2;
+        public bool formValid = true;
 
         decimal punteoAcumulado = 0, punteoFinal = 0;
         string rutaCarpetaAlumno = "";
@@ -72,6 +73,7 @@ acti.descripcion ACTIVIDAD
 ,alm.nombres NOMBRE_ALUMNO
 ,alm.apellidos APELLIDOS_ALUMNO
 ,acti.fecha_entrega FECHA_ENTREGA
+,acti.fecha_entrega_mejoramiento FECHA_ENTREGA_MEJORAMIENTO
 ,(select max(columna) columnas from Actividades_detalle ad where ad.actividadid = acti.actividadid) COLUMNAS
 ,(select max(fila) filas from Actividades_detalle ad where ad.actividadid = acti.actividadid) FILAS
 from Actividades acti, Asignaturas asig, Users user, Alumnos alm
@@ -87,49 +89,88 @@ and acti.actividadid = {actividadid}";
             adapter.Fill(dt);
             conn.Close();
 
-            columnas = Convert.ToInt32(dt.Rows[0]["COLUMNAS"]);
-            filas = Convert.ToInt32(dt.Rows[0]["FILAS"]);            
-            ctrls = new Control[columnas + 1, filas + 1];
-            valores = new decimal[columnas + 1, filas + 1];
-            calificado = new bool[columnas + 1, filas + 1];
-
-            lblGrado.Text = Convert.ToString(dt.Rows[0]["GRADO"]);
-            lblAsignatura.Text = Convert.ToString(dt.Rows[0]["ASIGNATURA"]);
-            lblCatedraticoTxt.Text = Convert.ToString(dt.Rows[0]["CATEDRATICO"]);
-            lblCicloTxt.Text = Convert.ToString(dt.Rows[0]["CICLO"]);
-            //lblFecha.Text = $"Guatemala, {DateTime.Now.Day} de {nameMonth[DateTime.Now.Month-1]} de {DateTime.Now.Year}";
-            lblFecha.Text = "Fecha";
-
-            lblEvaluar.Text = $"RUBRICA PARA EVALUAR {Convert.ToString(dt.Rows[0]["EVALUAR"])}";
-            lblTema.Text = $"TEMA {Convert.ToString(dt.Rows[0]["TEMA"])}";
-            lblPunteoMax.Text = $"VALOR: {Convert.ToString(dt.Rows[0]["PUNTEO_MAXIMO"])}pts.";
-            lblFechaEntrega.Text = $"Fecha de entrega: {Convert.ToDateTime(dt.Rows[0]["FECHA_ENTREGA"]).ToShortDateString()}";
-            lblEvaluar.Location = new Point((this.Width - lblEvaluar.Width) / 2, lblEvaluar.Location.Y);
-            lblTema.Location = new Point((this.Width - lblTema.Width) / 2, lblTema.Location.Y);
-            lblPunteoMax.Location = new Point((this.Width - lblPunteoMax.Width) / 2, lblPunteoMax.Location.Y);
-            lblFechaEntrega.Location = new Point((this.Width - lblFechaEntrega.Width) / 2, lblFechaEntrega.Location.Y);
-            punteo_max = Convert.ToDecimal(dt.Rows[0]["PUNTEO_MAXIMO"]);
-
-            lblAlumnoNombre.Text = $"{Convert.ToString(dt.Rows[0]["APELLIDOS_ALUMNO"])}, {Convert.ToString(dt.Rows[0]["NOMBRE_ALUMNO"])}";
-            lblAlumnoNombre.Location = new Point((this.Width - lblAlumnoNombre.Width) / 2, lblAlumnoNombre.Location.Y);
-
-            if(tipo_evaluacion == 1 || tipo_evaluacion == 2)
+            if (validaDatos(dt))
             {
-                lblPunteoFinal.Visible = true;
-                txtPunteoFinal.Visible = true;
-                if (tipo_evaluacion == 1)
-                {
-                    prct_actividades = f1.Parms.prct_mejoramiento;
-                    lblPunteoFinal.Text = $"Mejoramiento\n{prct_actividades}%";
-                }
-                if (tipo_evaluacion == 2)
-                {
-                    prct_actividades = f1.Parms.prct_extemporaneo;
-                    lblPunteoFinal.Text = $"Extemporaneo\n{prct_actividades}%";
-                }
-            }
 
-            llenaTabla();
+                columnas = Convert.ToInt32(dt.Rows[0]["COLUMNAS"]);
+                filas = Convert.ToInt32(dt.Rows[0]["FILAS"]);
+                ctrls = new Control[columnas + 1, filas + 1];
+                valores = new decimal[columnas + 1, filas + 1];
+                calificado = new bool[columnas + 1, filas + 1];
+
+                lblGrado.Text = Convert.ToString(dt.Rows[0]["GRADO"]);
+                lblAsignatura.Text = Convert.ToString(dt.Rows[0]["ASIGNATURA"]);
+                lblCatedraticoTxt.Text = Convert.ToString(dt.Rows[0]["CATEDRATICO"]);
+                lblCicloTxt.Text = Convert.ToString(dt.Rows[0]["CICLO"]);
+                //lblFecha.Text = $"Guatemala, {DateTime.Now.Day} de {nameMonth[DateTime.Now.Month-1]} de {DateTime.Now.Year}";
+                lblFecha.Text = "Fecha";
+
+                lblEvaluar.Text = $"RUBRICA PARA EVALUAR {Convert.ToString(dt.Rows[0]["EVALUAR"])}";
+                lblTema.Text = $"TEMA {Convert.ToString(dt.Rows[0]["TEMA"])}";
+                lblPunteoMax.Text = $"VALOR: {Convert.ToString(dt.Rows[0]["PUNTEO_MAXIMO"])}pts.";
+                if (tipo_evaluacion == 0)
+                    lblFechaEntrega.Text = $"Fecha de entrega: {Convert.ToDateTime(dt.Rows[0]["FECHA_ENTREGA"]).ToShortDateString()}";
+                if (tipo_evaluacion == 1)
+                    lblFechaEntrega.Text = $"Fecha de entrega: {Convert.ToDateTime(dt.Rows[0]["FECHA_ENTREGA_MEJORAMIENTO"]).ToShortDateString()}";
+                lblEvaluar.Location = new Point((this.Width - lblEvaluar.Width) / 2, lblEvaluar.Location.Y);
+                lblTema.Location = new Point((this.Width - lblTema.Width) / 2, lblTema.Location.Y);
+                lblPunteoMax.Location = new Point((this.Width - lblPunteoMax.Width) / 2, lblPunteoMax.Location.Y);
+                lblFechaEntrega.Location = new Point((this.Width - lblFechaEntrega.Width) / 2, lblFechaEntrega.Location.Y);
+                punteo_max = Convert.ToDecimal(dt.Rows[0]["PUNTEO_MAXIMO"]);
+
+                lblAlumnoNombre.Text = $"{Convert.ToString(dt.Rows[0]["APELLIDOS_ALUMNO"])}, {Convert.ToString(dt.Rows[0]["NOMBRE_ALUMNO"])}";
+                lblAlumnoNombre.Location = new Point((this.Width - lblAlumnoNombre.Width) / 2, lblAlumnoNombre.Location.Y);
+
+                if (tipo_evaluacion == 1 || tipo_evaluacion == 2)
+                {
+                    lblPunteoFinal.Visible = true;
+                    txtPunteoFinal.Visible = true;
+                    if (tipo_evaluacion == 1)
+                    {
+                        prct_actividades = f1.Parms.prct_mejoramiento;
+                        lblPunteoFinal.Text = $"Mejoramiento\n{prct_actividades}%";
+                    }
+                    if (tipo_evaluacion == 2)
+                    {
+                        prct_actividades = f1.Parms.prct_extemporaneo;
+                        lblPunteoFinal.Text = $"Extemporaneo\n{prct_actividades}%";
+                    }
+                }
+
+                llenaTabla();
+            }
+        }
+
+        bool validaDatos(DataTable dt)
+        {
+            bool ret = true;
+            string mensaje = "Debe llenar los siguientes datos de la actividad:\n ";
+            if(Convert.ToString(dt.Rows[0]["EVALUAR"]) == string.Empty)
+            {
+                mensaje += "Evaluar\n ";
+                ret = false;
+            }
+            if (Convert.ToString(dt.Rows[0]["TEMA"]) == string.Empty)
+            {
+                mensaje += "Tema\n ";
+                ret = false;
+            }
+            if (dt.Rows[0]["FECHA_ENTREGA"] == DBNull.Value)
+            {
+                mensaje += "Fecha entrega\n ";
+                ret = false;
+            }
+            if (dt.Rows[0]["FECHA_ENTREGA_MEJORAMIENTO"] == DBNull.Value)
+            {
+                mensaje += "Fecha entrega mejoramiento\n ";
+                ret = false;
+            }
+            if(ret == false)
+            {
+                formValid = false;
+                MessageBox.Show(mensaje, "Faltan Datos", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            return ret;
         }
 
         private void llenaTabla()
